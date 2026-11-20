@@ -1,0 +1,31 @@
+# Financial Fraud Intelligence - dépendances
+# Versions identiques à celles qui ont entraîné models/fraud_detection_model.joblib :
+# un modèle enregistré avec joblib doit être rechargé avec les mêmes versions.
+#
+# Installation :  python -m pip install -r requirements.txt
+
+# Données et calcul
+pandas==3.0.1
+numpy==2.4.2
+scipy==1.17.1
+
+# Machine learning
+scikit-learn==1.9.1
+imbalanced-learn==0.14.2
+lightgbm==4.7.0
+xgboost==3.2.0
+joblib==1.6.0
+
+# Explication du modèle
+shap==0.51.0
+
+# Visualisation (notebook)
+matplotlib==3.11.2
+seaborn==0.13.2
+
+# Site web de démonstration (fraud_api/)
+django==5.2.19
+
+# Notebook
+jupyter==1.0.0
+ipykernel

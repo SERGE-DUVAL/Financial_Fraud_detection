@@ -1,0 +1,131 @@
+{
+  "seuil_alerte": 0.23297871572871567,
+  "seuil_blocage": 0.6136886724386724,
+  "colonnes_entree": [
+    "Time",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "V17",
+    "V18",
+    "V19",
+    "V20",
+    "V21",
+    "V22",
+    "V23",
+    "V24",
+    "V25",
+    "V26",
+    "V27",
+    "V28",
+    "Amount"
+  ],
+  "colonnes_modele": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "V17",
+    "V18",
+    "V19",
+    "V20",
+    "V21",
+    "V22",
+    "V23",
+    "V24",
+    "V25",
+    "V26",
+    "V27",
+    "V28",
+    "Amount_log",
+    "Heure_sin",
+    "Heure_cos"
+  ],
+  "nom_modele": "Random Forest",
+  "strategie_desequilibre": "SMOTE (1:10)",
+  "hyperparametres": {
+    "model__n_estimators": 300,
+    "model__min_samples_split": 2,
+    "model__min_samples_leaf": 4,
+    "model__max_features": "sqrt",
+    "model__max_depth": 30
+  },
+  "hypotheses": {
+    "cout_verification_eur": 5.0,
+    "capacite_alertes_jour": 500,
+    "precision_blocage": 0.9
+  },
+  "metriques_test": {
+    "Accuracy": 0.9988193000387693,
+    "Precision": 0.5315315315315315,
+    "Recall": 0.7972972972972973,
+    "F1": 0.6378378378378379,
+    "F2": 0.7248157248157249,
+    "FPR": 0.0009175607001693959,
+    "TP": 59.0,
+    "FN": 15.0,
+    "FP": 52.0,
+    "TN": 56620.0,
+    "ROC-AUC": 0.9882712946571642,
+    "PR-AUC": 0.8148323849688639,
+    "Alertes / jour": 348.00783801436967,
+    "Coût total (€)": 2952.79
+  },
+  "intervalles_confiance_95": {
+    "Recall": [
+      0.7014925373134329,
+      0.8857488479262672
+    ],
+    "Precision": [
+      0.44735442329227326,
+      0.6216471188169301
+    ],
+    "F1": [
+      0.5581334149326805,
+      0.7135857860732232
+    ],
+    "PR-AUC": [
+      0.7353883303471499,
+      0.8882831688109118
+    ]
+  },
+  "periode_entrainement_heures": [
+    0.0,
+    40.3425
+  ],
+  "versions": {
+    "python": "3.11.8",
+    "scikit-learn": "1.9.1",
+    "pandas": "3.0.1",
+    "numpy": "2.4.2",
+    "lightgbm": "4.7.0",
+    "xgboost": "3.2.0",
+    "imbalanced-learn": "0.14.2"
+  },
+  "date": "2026-11-19T20:09:40"
+}

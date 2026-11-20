@@ -1,0 +1,88 @@
+# Financial Fraud Intelligence - Git Ignore File
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data files (don't commit raw data)
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.parquet
+data/interim/*
+data/processed/*
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# Models (don't commit trained models)
+models/*.pkl
+models/*.joblib
+models/*.h5
+!models/.gitkeep
+
+# Reports and figures
+reports/figures/*.png
+reports/figures/*.jpg
+reports/figures/*.pdf
+reports/evaluation/*.csv
+reports/evaluation/*.json
+!reports/figures/.gitkeep
+!reports/evaluation/.gitkeep
+
+# Logs
+logs/
+*.log
+
+# Configuration overrides
+config/local_config.yaml
+
+# Environment variables
+.env
+.env.local
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Presentation
+presentation/*.pptx
+presentation/*.pdf
+
+# Temporary files
+*.tmp
+*.bak
