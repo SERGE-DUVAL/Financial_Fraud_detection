@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Financial Fraud Intelligence
 
 ## Intelligent Credit Card Fraud Detection System
@@ -331,3 +332,7 @@ Pour toute question ou suggestion, n'hésitez pas à contacter l'équipe projet.
 **Formation** : Bachelor 3 Intelligence Artificielle  
 **Institution** : ECE Paris  
 **Année académique** : 2023-2024
+=======
+# Financial_Fraud_detection
+Projet de Datamining dédié à la détection de transactions frauduleuses. Analyse exploratoire, préparation des données, comparaison et optimisation de modèles supervisés, avec une attention particulière au déséquilibre des classes et à l'évaluation des performances via PR-AUC.
+>>>>>>> 72800bb4f81a60d91270a165a56d8af176e21a34
