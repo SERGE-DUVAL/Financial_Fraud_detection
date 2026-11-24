@@ -1,0 +1,124 @@
+{% load static %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fraud Intelligence — Détection de fraude</title>
+  <link rel="stylesheet" href="{% static 'detection/style.css' %}">
+</head>
+<body>
+<header class="entete">
+  <div class="marque">
+    <svg class="logo" viewBox="0 0 46 52" aria-hidden="true">
+      <path d="M23 2 L43 10 L41 30 Q37 44 23 50 Q9 44 5 30 L3 10 Z" fill="#4f46e5" stroke="#818cf8" stroke-width="2"/>
+      <path d="M14 26 L21 33 L33 19" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <h1>Fraud Intelligence</h1>
+      <p>Détection de fraude bancaire — testez le modèle sur de vraies transactions</p>
+    </div>
+  </div>
+  <div class="entete-droite">
+    <span id="modele-resume" class="modele-resume"></span>
+    <span id="statut" class="statut travail"><i></i><span>Chargement du modèle…</span></span>
+  </div>
+</header>
+
+<nav class="onglets">
+  <button class="onglet actif" data-cible="unique">Analyser une transaction</button>
+  <button class="onglet" data-cible="lot">Analyser un lot</button>
+  <button class="onglet" data-cible="modele">Le modèle</button>
+</nav>
+
+<main>
+  <!-- ============ Onglet 1 : une transaction ============ -->
+  <section id="unique" class="panneau actif">
+    <div class="deux-colonnes">
+      <form id="formulaire" class="carte" novalidate>
+        <h2>Transaction à analyser</h2>
+        <p class="doux">Chargez une vraie transaction de la période de test (le modèle ne l'a jamais vue) ou saisissez vos propres valeurs.</p>
+
+        <div class="exemples">
+          <button type="button" class="btn btn-rouge" data-exemple="fraude">Fraude réelle</button>
+          <button type="button" class="btn btn-vert" data-exemple="normale">Transaction normale</button>
+          <button type="button" class="btn btn-indigo" data-exemple="aleatoire">Au hasard</button>
+          <button type="button" class="btn btn-gris" id="effacer">Effacer</button>
+        </div>
+        <p id="source" class="source"></p>
+
+        <div class="principaux">
+          <label>Montant (€)
+            <input name="Amount" inputmode="decimal" autocomplete="off">
+          </label>
+          <label>Time (secondes depuis le début de la collecte)
+            <span class="avec-aide"><input name="Time" inputmode="decimal" autocomplete="off"><em id="heure"></em></span>
+          </label>
+        </div>
+
+        <hr>
+        <h3>Variables anonymisées V1 à V28</h3>
+        <p class="doux petit">Issues d'une ACP par la banque pour protéger les clients : elles n'ont pas de sens lisible.</p>
+        <div class="grille-v">
+          {% for nom in colonnes_v %}
+          <label><span>{{ nom }}</span><input name="{{ nom }}" inputmode="decimal" autocomplete="off"></label>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-principal" id="analyser">Analyser la transaction</button>
+      </form>
+
+      <div class="carte resultat">
+        <h2>Résultat</h2>
+        <svg id="jauge" viewBox="0 0 380 208" role="img" aria-label="Score de fraude"></svg>
+        <div id="badge" class="badge">En attente</div>
+        <p id="detail" class="doux centre">Chargez un exemple, puis cliquez sur « Analyser ».</p>
+        <p id="realite" class="realite"></p>
+        <hr>
+        <h3>Pourquoi ce score ?</h3>
+        <p id="explication-texte" class="doux petit">Contribution de chaque variable au score (valeurs SHAP).</p>
+        <div id="explication" class="explication"><p class="vide">Les variables qui ont le plus pesé s'afficheront ici.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Onglet 2 : un lot ============ -->
+  <section id="lot" class="panneau">
+    <div class="carte">
+      <h2>Analyser un lot de transactions</h2>
+      <p class="doux">Rejouez toute la période de test (les 20 % de transactions les plus récentes) ou envoyez votre propre fichier CSV avec les colonnes Time, V1 à V28 et Amount (et Class si vous connaissez la réalité).</p>
+      <div class="exemples">
+        <button type="button" class="btn btn-principal-petit" id="rejouer">Rejouer la période de test</button>
+        <label class="btn btn-indigo fichier">Envoyer un fichier CSV…<input type="file" id="fichier" accept=".csv"></label>
+        <span id="lot-source" class="source"></span>
+      </div>
+      <div id="tuiles" class="tuiles"></div>
+      <h3 id="titre-tableau" hidden>Les 100 transactions les plus suspectes</h3>
+      <div class="tableau-cadre" id="tableau-cadre" hidden>
+        <table>
+          <thead><tr><th>#</th><th>Heure</th><th class="d">Montant</th><th>Score de fraude</th><th>Décision</th><th>Réalité</th></tr></thead>
+          <tbody id="tableau"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Onglet 3 : le modèle ============ -->
+  <section id="modele" class="panneau">
+    <div class="deux-colonnes egales">
+      <div class="carte"><h2>Le modèle exporté</h2><p class="doux">Fichier models/fraud_detection_model.joblib, créé par le notebook.</p><dl id="infos-modele" class="cles"></dl></div>
+      <div class="carte"><h2>Résultats sur la période de test</h2><p class="doux">74 fraudes jamais vues, sur les 7,7 dernières heures du dataset.</p><dl id="infos-test" class="cles"></dl></div>
+    </div>
+    <div class="carte api">
+      <h2>Utiliser l'API</h2>
+      <p class="doux">Le même modèle est accessible en JSON :</p>
+      <pre>POST /api/predire/        {"Time": 0, "V1": -1.36, …, "V28": -0.02, "Amount": 149.62}
+GET  /api/exemple/?type=fraude      une vraie transaction du test (fraude | normale | aleatoire)
+POST /api/lot/            fichier CSV (champ « fichier ») ou source=test
+GET  /api/modele/         fiche du modèle</pre>
+    </div>
+  </section>
+</main>
+
+<script src="{% static 'detection/app.js' %}"></script>
+</body>
+</html>
